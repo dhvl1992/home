@@ -67,15 +67,18 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
         
+        /* REDESIGNED QUICK NOTES SECTION */
         .quick-notes-container {
             width: 45%;
             background: #FEF7ED;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             border-radius: 15px;
             border-left: 5px solid #059669;
             overflow: hidden;
             transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .quick-notes-container:hover {
@@ -85,102 +88,137 @@
         .quick-notes-container h3 {
             color: #1E293B;
             border-bottom: 3px solid #059669;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
             margin-top: 0;
             font-size: 1.8em;
         }
         
+        /* Simple Input Section */
         .notes-input-section {
-            margin-bottom: 20px;
-        }
-        
-        .note-date-input, .note-tag-input, .note-type-select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 2px solid rgba(30, 41, 59, 0.1);
-            border-radius: 8px;
-            font-size: 14px;
-            box-sizing: border-box;
-            font-family: Georgia, serif;
-            background: rgba(5, 150, 105, 0.05);
-            transition: border-color 0.3s ease;
-        }
-
-        .note-date-input:focus, .note-tag-input:focus, .note-type-select:focus {
-            outline: none;
-            border-color: #059669;
-        }
-        
-        .note-input-container {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
         }
         
         #quick-note-input {
-            flex-grow: 1;
-            padding: 12px;
-            border: 2px solid rgba(30, 41, 59, 0.1);
-            border-radius: 8px;
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid rgba(5, 150, 105, 0.2);
+            border-radius: 10px;
             font-size: 14px;
             font-family: Georgia, serif;
             background: rgba(5, 150, 105, 0.05);
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            outline: none;
         }
 
         #quick-note-input:focus {
-            outline: none;
             border-color: #059669;
+            background: rgba(5, 150, 105, 0.1);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        #quick-note-input::placeholder {
+            color: #6B7280;
+            font-style: italic;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: Georgia, serif;
+            transition: all 0.2s ease;
+            white-space: nowrap;
         }
         
         #add-note-btn {
-            padding: 12px 20px;
             background: linear-gradient(135deg, #059669, #34D399);
-            color: #FEF7ED;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: transform 0.2s ease;
+            color: white;
+        }
+        
+        #add-task-btn {
+            background: linear-gradient(135deg, #EA580C, #FB923C);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
         #add-note-btn:hover {
-            transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
         }
         
-        .notes-content {
-            height: 200px;
-            overflow-y: auto;
-            border: 2px solid rgba(5, 150, 105, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            background: rgba(5, 150, 105, 0.03);
+        #add-task-btn:hover {
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.4);
         }
         
+        /* Notes Content Area - Much Larger */
+        .notes-content {
+            flex: 1;
+            overflow-y: auto;
+            border: 2px solid rgba(5, 150, 105, 0.15);
+            border-radius: 12px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.02), rgba(234, 88, 12, 0.02));
+            min-height: 0;
+        }
+
+        /* Custom Scrollbar */
+        .notes-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .notes-content::-webkit-scrollbar-track {
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 10px;
+        }
+
+        .notes-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #059669, #34D399);
+            border-radius: 10px;
+        }
+
+        .notes-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #047857, #10B981);
+        }
+        
+        /* Individual Note/Task Items */
         .note-item {
-            margin-bottom: 15px;
-            padding: 12px;
-            background: #FEF7ED;
-            border-radius: 8px;
-            border-left: 4px solid #EA580C;
-            font-size: 14px;
+            margin-bottom: 12px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
         }
 
         .note-item:hover {
             transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
         
-        .note-item.todo-item {
-            border-left-color: #059669;
+        .note-item.task-item {
+            border-left-color: #EA580C;
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.05), rgba(251, 146, 60, 0.05));
         }
         
         .note-item.note-item-bullet {
-            border-left-color: #EA580C;
+            border-left-color: #059669;
+            background: linear-gradient(135deg, rgba(5, 150, 105, 0.05), rgba(52, 211, 153, 0.05));
         }
         
         .note-header {
@@ -188,59 +226,102 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
-            font-size: 12px;
-            color: #666;
         }
         
-        .note-tag {
-            background: linear-gradient(45deg, #EA580C, #FB923C);
-            color: #FEF7ED;
-            padding: 4px 8px;
-            border-radius: 6px;
+        .note-timestamp {
             font-size: 11px;
+            color: #6B7280;
+            font-weight: normal;
+        }
+        
+        .note-type-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .note-type-badge.task-badge {
+            background: linear-gradient(45deg, #EA580C, #FB923C);
+            color: white;
+        }
+        
+        .note-type-badge.note-badge {
+            background: linear-gradient(45deg, #059669, #34D399);
+            color: white;
         }
         
         .note-content {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            gap: 12px;
         }
         
         .note-content input[type="checkbox"] {
-            margin-right: 10px;
             width: 18px;
             height: 18px;
+            margin-top: 3px;
             cursor: pointer;
+            accent-color: #EA580C;
         }
         
         .note-bullet {
-            margin-right: 10px;
-            color: #EA580C;
+            color: #059669;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
         }
         
         .note-text {
-            flex-grow: 1;
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #374151;
+            word-wrap: break-word;
+        }
+        
+        .note-text.completed {
+            text-decoration: line-through;
+            color: #9CA3AF;
+            font-style: italic;
         }
         
         .note-delete {
-            margin-left: 10px;
             background: linear-gradient(45deg, #DC2626, #EF4444);
-            color: #FEF7ED;
+            color: white;
             border: none;
-            padding: 4px 8px;
-            border-radius: 6px;
+            padding: 6px 10px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
-            transition: transform 0.2s ease;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
         }
         
         .note-delete:hover {
             transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
         }
 
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            color: #9CA3AF;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #D1D5DB;
+        }
+
+        /* Rest of the original styles remain the same */
         .main-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -577,6 +658,22 @@
             margin-bottom: 30px;
         }
         
+        /* Animation for new items */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .note-item.new-item {
+            animation: slideIn 0.3s ease;
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -640,6 +737,18 @@
 
             .timeline-item {
                 padding-left: 30px;
+            }
+
+            .notes-input-section {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                justify-content: stretch;
+            }
+
+            .btn {
+                flex: 1;
             }
         }
 
@@ -709,20 +818,20 @@
             
             <div class="quick-notes-container">
                 <h3>Quick Notes & Tasks</h3>
+                
                 <div class="notes-input-section">
-                    <input type="date" id="note-date" class="note-date-input">
-                    <input type="text" id="note-tag" placeholder="Tag (e.g., meeting, research)" class="note-tag-input">
-                    <select id="note-type" class="note-type-select">
-                        <option value="todo">To-Do (Checkbox)</option>
-                        <option value="note">Note (Bullet)</option>
-                    </select>
-                    <div class="note-input-container">
-                        <input type="text" id="quick-note-input" placeholder="Add note or task...">
-                        <button id="add-note-btn">Add</button>
+                    <input type="text" id="quick-note-input" placeholder="Type your note or task here..." maxlength="500">
+                    <div class="action-buttons">
+                        <button id="add-note-btn" class="btn">+ Note</button>
+                        <button id="add-task-btn" class="btn">+ Task</button>
                     </div>
                 </div>
+                
                 <div class="notes-content" id="notes-content">
-                    <!-- Notes and tasks will appear here -->
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <div>Start adding your notes and tasks above!</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -846,96 +955,125 @@
     </div>
 
     <script>
-        // Quick Notes Functionality
-        const noteDateInput = document.getElementById('note-date');
-        const noteTagInput = document.getElementById('note-tag');
-        const noteTypeSelect = document.getElementById('note-type');
+        // Enhanced Quick Notes Functionality
         const quickNoteInput = document.getElementById('quick-note-input');
         const addNoteBtn = document.getElementById('add-note-btn');
+        const addTaskBtn = document.getElementById('add-task-btn');
         const notesContent = document.getElementById('notes-content');
-
-        // Set today's date as default
-        noteDateInput.valueAsDate = new Date();
 
         let noteIdCounter = 0;
 
-        function addNoteToDOM(id, date, tag, type, text) {
-            const noteDiv = document.createElement('div');
-            noteDiv.classList.add('note-item');
-            noteDiv.classList.add(type === 'todo' ? 'todo-item' : 'note-item-bullet');
-            noteDiv.setAttribute('data-note-id', id);
-
-            const noteHeader = document.createElement('div');
-            noteHeader.classList.add('note-header');
+        // Remove empty state when there are items
+        function toggleEmptyState() {
+            const emptyState = notesContent.querySelector('.empty-state');
+            const hasItems = notesContent.querySelectorAll('.note-item').length > 0;
             
-            const dateSpan = document.createElement('span');
-            dateSpan.textContent = date;
-            
-            const tagSpan = document.createElement('span');
-            tagSpan.classList.add('note-tag');
-            tagSpan.textContent = tag || 'general';
-            
-            noteHeader.appendChild(dateSpan);
-            noteHeader.appendChild(tagSpan);
-
-            const noteContentDiv = document.createElement('div');
-            noteContentDiv.classList.add('note-content');
-
-            if (type === 'todo') {
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.addEventListener('change', () => {
-                    textSpan.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
-                    textSpan.style.color = checkbox.checked ? '#888' : '#333';
-                });
-                noteContentDiv.appendChild(checkbox);
-            } else {
-                const bullet = document.createElement('span');
-                bullet.classList.add('note-bullet');
-                bullet.textContent = '•';
-                noteContentDiv.appendChild(bullet);
+            if (hasItems && emptyState) {
+                emptyState.remove();
+            } else if (!hasItems && !emptyState) {
+                notesContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <div>Start adding your notes and tasks above!</div>
+                    </div>
+                `;
             }
-
-            const textSpan = document.createElement('span');
-            textSpan.classList.add('note-text');
-            textSpan.textContent = text;
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.classList.add('note-delete');
-            deleteBtn.textContent = '×';
-            deleteBtn.addEventListener('click', () => {
-                noteDiv.remove();
-            });
-
-            noteContentDiv.appendChild(textSpan);
-            noteContentDiv.appendChild(deleteBtn);
-
-            noteDiv.appendChild(noteHeader);
-            noteDiv.appendChild(noteContentDiv);
-            
-            notesContent.appendChild(noteDiv);
-            notesContent.scrollTop = notesContent.scrollHeight;
         }
 
-        addNoteBtn.addEventListener('click', () => {
-            const date = noteDateInput.value || new Date().toISOString().split('T')[0];
-            const tag = noteTagInput.value.trim();
-            const type = noteTypeSelect.value;
-            const text = quickNoteInput.value.trim();
+        function getCurrentTimestamp() {
+            const now = new Date();
+            return now.toLocaleString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+        }
 
-            if (text !== '') {
-                addNoteToDOM(++noteIdCounter, date, tag, type, text);
-                quickNoteInput.value = '';
-                noteTagInput.value = '';
-                // Keep the date and type as is for next entry
+        function addItemToDOM(id, type, text) {
+            // Remove empty state if it exists
+            const emptyState = notesContent.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
             }
-        });
+
+            const noteDiv = document.createElement('div');
+            noteDiv.classList.add('note-item', 'new-item');
+            noteDiv.classList.add(type === 'task' ? 'task-item' : 'note-item-bullet');
+            noteDiv.setAttribute('data-note-id', id);
+
+            const timestamp = getCurrentTimestamp();
+
+            noteDiv.innerHTML = `
+                <div class="note-header">
+                    <span class="note-timestamp">${timestamp}</span>
+                    <span class="note-type-badge ${type}-badge">${type}</span>
+                </div>
+                <div class="note-content">
+                    ${type === 'task' ? 
+                        `<input type="checkbox" onchange="toggleTaskCompletion(this)">` : 
+                        `<span class="note-bullet">•</span>`
+                    }
+                    <span class="note-text">${text}</span>
+                    <button class="note-delete" onclick="deleteNote(this)">✕</button>
+                </div>
+            `;
+            
+            // Add to top of the list
+            notesContent.insertBefore(noteDiv, notesContent.firstChild);
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                noteDiv.classList.remove('new-item');
+            }, 300);
+        }
+
+        function addItem(type) {
+            const text = quickNoteInput.value.trim();
+            if (text !== '') {
+                addItemToDOM(++noteIdCounter, type, text);
+                quickNoteInput.value = '';
+                quickNoteInput.focus();
+            }
+        }
+
+        // Event Listeners
+        addNoteBtn.addEventListener('click', () => addItem('note'));
+        addTaskBtn.addEventListener('click', () => addItem('task'));
 
         quickNoteInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                addNoteBtn.click();
+                if (e.shiftKey) {
+                    addItem('task');
+                } else {
+                    addItem('note');
+                }
+                e.preventDefault();
             }
         });
+
+        // Auto-focus input on page load
+        quickNoteInput.focus();
+
+        // Global functions for inline event handlers
+        window.toggleTaskCompletion = function(checkbox) {
+            const noteText = checkbox.parentElement.querySelector('.note-text');
+            if (checkbox.checked) {
+                noteText.classList.add('completed');
+            } else {
+                noteText.classList.remove('completed');
+            }
+        };
+
+        window.deleteNote = function(deleteBtn) {
+            const noteItem = deleteBtn.closest('.note-item');
+            noteItem.style.animation = 'slideIn 0.3s ease reverse';
+            setTimeout(() => {
+                noteItem.remove();
+                toggleEmptyState();
+            }, 300);
+        };
     </script>
 
 </body>
