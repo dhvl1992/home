@@ -954,14 +954,44 @@
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
     <script>
-        // Enhanced Quick Notes Functionality
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBRuZu429XdA_YtoIDSbKyFQpTCtzV3sXk",
+            authDomain: "githubpagestodo.firebaseapp.com",
+            projectId: "githubpagestodo",
+            storageBucket: "githubpagestodo.firebasestorage.app",
+            messagingSenderId: "176624505829",
+            appId: "1:176624505829:web:d63c054494ffcf8fb7d50c",
+            measurementId: "G-V5E4WXQ17W"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const notesCollection = db.collection('professor-notes');
+
+        // Enhanced Quick Notes Functionality with Firebase
         const quickNoteInput = document.getElementById('quick-note-input');
         const addNoteBtn = document.getElementById('add-note-btn');
         const addTaskBtn = document.getElementById('add-task-btn');
         const notesContent = document.getElementById('notes-content');
 
         let noteIdCounter = 0;
+
+        // Show loading state
+        function showLoading() {
+            notesContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">⏳</div>
+                    <div>Loading your notes...</div>
+                </div>
+            `;
+        }
 
         // Remove empty state when there are items
         function toggleEmptyState() {
@@ -991,7 +1021,72 @@
             });
         }
 
-        function addItemToDOM(id, type, text) {
+        // Save note to Firebase
+        async function saveNoteToFirebase(noteData) {
+            try {
+                const docRef = await notesCollection.add(noteData);
+                return docRef.id;
+            } catch (error) {
+                console.error('Error saving note:', error);
+                alert('Failed to save note. Please try again.');
+                return null;
+            }
+        }
+
+        // Update note in Firebase
+        async function updateNoteInFirebase(firebaseId, updates) {
+            try {
+                await notesCollection.doc(firebaseId).update(updates);
+            } catch (error) {
+                console.error('Error updating note:', error);
+            }
+        }
+
+        // Delete note from Firebase
+        async function deleteNoteFromFirebase(firebaseId) {
+            try {
+                await notesCollection.doc(firebaseId).delete();
+            } catch (error) {
+                console.error('Error deleting note:', error);
+            }
+        }
+
+        // Load notes from Firebase
+        async function loadNotesFromFirebase() {
+            showLoading();
+            try {
+                const snapshot = await notesCollection.orderBy('createdAt', 'desc').get();
+                
+                // Clear content first
+                notesContent.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    toggleEmptyState();
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    addItemToDOM(data.id, data.type, data.text, data.timestamp, data.completed, doc.id);
+                });
+                
+                // Update counter to prevent ID conflicts
+                if (!snapshot.empty) {
+                    const maxId = Math.max(...snapshot.docs.map(doc => doc.data().id));
+                    noteIdCounter = maxId;
+                }
+            } catch (error) {
+                console.error('Error loading notes:', error);
+                notesContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">❌</div>
+                        <div>Failed to load notes. Please refresh the page.</div>
+                    </div>
+                `;
+            }
+        }
+
+        function addItemToDOM(id, type, text, timestamp = null, completed = false, firebaseId = null) {
             // Remove empty state if it exists
             const emptyState = notesContent.querySelector('.empty-state');
             if (emptyState) {
@@ -1002,26 +1097,35 @@
             noteDiv.classList.add('note-item', 'new-item');
             noteDiv.classList.add(type === 'task' ? 'task-item' : 'note-item-bullet');
             noteDiv.setAttribute('data-note-id', id);
+            if (firebaseId) {
+                noteDiv.setAttribute('data-firebase-id', firebaseId);
+            }
 
-            const timestamp = getCurrentTimestamp();
+            const displayTimestamp = timestamp || getCurrentTimestamp();
 
             noteDiv.innerHTML = `
                 <div class="note-header">
-                    <span class="note-timestamp">${timestamp}</span>
+                    <span class="note-timestamp">${displayTimestamp}</span>
                     <span class="note-type-badge ${type}-badge">${type}</span>
                 </div>
                 <div class="note-content">
                     ${type === 'task' ? 
-                        `<input type="checkbox" onchange="toggleTaskCompletion(this)">` : 
+                        `<input type="checkbox" ${completed ? 'checked' : ''} onchange="toggleTaskCompletion(this)">` : 
                         `<span class="note-bullet">•</span>`
                     }
-                    <span class="note-text">${text}</span>
+                    <span class="note-text ${completed ? 'completed' : ''}">${text}</span>
                     <button class="note-delete" onclick="deleteNote(this)">✕</button>
                 </div>
             `;
             
-            // Add to top of the list
-            notesContent.insertBefore(noteDiv, notesContent.firstChild);
+            // Add to top of the list (or maintain order for loaded items)
+            if (timestamp) {
+                // Loading existing items - add to bottom to maintain order
+                notesContent.appendChild(noteDiv);
+            } else {
+                // New items - add to top
+                notesContent.insertBefore(noteDiv, notesContent.firstChild);
+            }
             
             // Remove animation class after animation completes
             setTimeout(() => {
@@ -1029,10 +1133,35 @@
             }, 300);
         }
 
-        function addItem(type) {
+        async function addItem(type) {
             const text = quickNoteInput.value.trim();
             if (text !== '') {
-                addItemToDOM(++noteIdCounter, type, text);
+                const id = ++noteIdCounter;
+                const timestamp = getCurrentTimestamp();
+                const createdAt = firebase.firestore.Timestamp.now();
+                
+                // Add to DOM immediately for better UX
+                addItemToDOM(id, type, text, timestamp);
+                
+                // Save to Firebase
+                const noteData = {
+                    id: id,
+                    type: type,
+                    text: text,
+                    timestamp: timestamp,
+                    createdAt: createdAt,
+                    completed: false
+                };
+                
+                const firebaseId = await saveNoteToFirebase(noteData);
+                if (firebaseId) {
+                    // Update DOM element with Firebase ID
+                    const noteElement = document.querySelector(`[data-note-id="${id}"]`);
+                    if (noteElement) {
+                        noteElement.setAttribute('data-firebase-id', firebaseId);
+                    }
+                }
+                
                 quickNoteInput.value = '';
                 quickNoteInput.focus();
             }
@@ -1053,27 +1182,49 @@
             }
         });
 
-        // Auto-focus input on page load
-        quickNoteInput.focus();
-
         // Global functions for inline event handlers
-        window.toggleTaskCompletion = function(checkbox) {
+        window.toggleTaskCompletion = async function(checkbox) {
             const noteText = checkbox.parentElement.querySelector('.note-text');
+            const noteItem = checkbox.closest('.note-item');
+            const firebaseId = noteItem.getAttribute('data-firebase-id');
+            
             if (checkbox.checked) {
                 noteText.classList.add('completed');
             } else {
                 noteText.classList.remove('completed');
             }
+            
+            // Update in Firebase
+            if (firebaseId) {
+                await updateNoteInFirebase(firebaseId, { completed: checkbox.checked });
+            }
         };
 
-        window.deleteNote = function(deleteBtn) {
+        window.deleteNote = async function(deleteBtn) {
             const noteItem = deleteBtn.closest('.note-item');
+            const firebaseId = noteItem.getAttribute('data-firebase-id');
+            
+            // Delete from Firebase first
+            if (firebaseId) {
+                await deleteNoteFromFirebase(firebaseId);
+            }
+            
+            // Animate and remove from DOM
             noteItem.style.animation = 'slideIn 0.3s ease reverse';
             setTimeout(() => {
                 noteItem.remove();
                 toggleEmptyState();
             }, 300);
         };
+
+        // Load notes when page loads
+        window.addEventListener('load', () => {
+            loadNotesFromFirebase();
+            // Auto-focus input after loading
+            setTimeout(() => {
+                quickNoteInput.focus();
+            }, 1000);
+        });
     </script>
 
 </body>
