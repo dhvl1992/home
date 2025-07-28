@@ -2,201 +2,684 @@
 <html>
 <head>
     <title>Dr. Dhaval U. Patel - Professor Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            line-height: 1.6;
-        }
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .profile-section {
-            background-color: #fff;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        .profile-photo {
-            margin-right: 30px;
-            margin-bottom: 20px;
-        }
-        .profile-photo img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #007bff;
-        }
-        .profile-info h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-        }
-        .profile-info h2 {
-            color: #666;
-            margin-bottom: 20px;
-            font-weight: normal;
-        }
-        .content-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-        .content-section {
-            background-color: #fff;
-            padding: 25px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .content-section h3 {
-            color: #333;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .research-paper {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-left: 4px solid #007bff;
-            border-radius: 4px;
-        }
-        .achievement {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 10px;
+            padding: 0;
+            box-sizing: border-box;
         }
 
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, #FEF7ED 0%, #1E293B 100%);
+            min-height: 100vh;
+            color: #1E293B;
+            line-height: 1.6;
+            padding: 20px;
+        }
         
-        /* To-Do List Styles */
-        .todo-container {
-            background-color: #fff;
-            padding: 25px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .todo-container h3 {
-            text-align: center;
-            color: #333;
-            border-bottom: 2px solid #28a745;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .todo-input-container {
+        /* Timetable and Notes Section */
+        .timetable-notes-section {
             display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            height: 500px;
+        }
+        
+        .timetable-container {
+            width: 70%;
+            background: #FEF7ED;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            border-left: 5px solid #EA580C;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .timetable-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .timetable-container h3 {
+            color: #1E293B;
+            border-bottom: 3px solid #EA580C;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        
+        .timetable-content {
+            height: 400px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .timetable-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .quick-notes-container {
+            width: 30%;
+            background: #FEF7ED;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            border-left: 5px solid #059669;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .quick-notes-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .quick-notes-container h3 {
+            color: #1E293B;
+            border-bottom: 3px solid #059669;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        
+        .notes-input-section {
             margin-bottom: 20px;
         }
-        #new-task {
+        
+        .note-date-input, .note-tag-input, .note-type-select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid rgba(30, 41, 59, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+            font-family: Georgia, serif;
+            background: rgba(5, 150, 105, 0.05);
+            transition: border-color 0.3s ease;
+        }
+
+        .note-date-input:focus, .note-tag-input:focus, .note-type-select:focus {
+            outline: none;
+            border-color: #059669;
+        }
+        
+        .note-input-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        #quick-note-input {
             flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 12px;
+            border: 2px solid rgba(30, 41, 59, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: Georgia, serif;
+            background: rgba(5, 150, 105, 0.05);
+            transition: border-color 0.3s ease;
         }
-        #add-task-btn {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
+
+        #quick-note-input:focus {
+            outline: none;
+            border-color: #059669;
+        }
+        
+        #add-note-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #059669, #34D399);
+            color: #FEF7ED;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-left: 10px;
-            font-size: 16px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
         }
-        #add-task-btn:hover {
-            background-color: #218838;
+        
+        #add-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
         }
-        ul {
-            list-style: none;
-            padding: 0;
+        
+        .notes-content {
+            height: 200px;
+            overflow-y: auto;
+            border: 2px solid rgba(5, 150, 105, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            background: rgba(5, 150, 105, 0.03);
         }
-        li {
-            background-color: #f9f9f9;
-            padding: 10px;
+        
+        .note-item {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #FEF7ED;
+            border-radius: 8px;
+            border-left: 4px solid #EA580C;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .note-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .note-item.todo-item {
+            border-left-color: #059669;
+        }
+        
+        .note-item.note-item-bullet {
+            border-left-color: #EA580C;
+        }
+        
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 8px;
-            border-radius: 4px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .note-tag {
+            background: linear-gradient(45deg, #EA580C, #FB923C);
+            color: #FEF7ED;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .note-content {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
-        li.completed {
-            text-decoration: line-through;
-            color: #888;
-            background-color: #e9e9e9;
-        }
-        li input[type="checkbox"] {
+        
+        .note-content input[type="checkbox"] {
             margin-right: 10px;
             width: 18px;
             height: 18px;
             cursor: pointer;
         }
-        li button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        li button:hover {
-            background-color: #c82333;
+        
+        .note-bullet {
+            margin-right: 10px;
+            color: #EA580C;
+            font-weight: bold;
+            font-size: 1.2em;
         }
         
+        .note-text {
+            flex-grow: 1;
+        }
+        
+        .note-delete {
+            margin-left: 10px;
+            background: linear-gradient(45deg, #DC2626, #EF4444);
+            color: #FEF7ED;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+        
+        .note-delete:hover {
+            transform: scale(1.1);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-section {
+            background: #FEF7ED;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            border-left: 5px solid #EA580C;
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .profile-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .profile-photo {
+            margin-right: 40px;
+            margin-bottom: 20px;
+        }
+
+        .profile-photo img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #EA580C;
+            box-shadow: 0 8px 25px rgba(234, 88, 12, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-photo img:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-info h1 {
+            color: #1E293B;
+            margin-bottom: 15px;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .profile-info h2 {
+            color: #059669;
+            margin-bottom: 25px;
+            font-weight: normal;
+            font-size: 1.6em;
+            font-style: italic;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .content-section {
+            background: #FEF7ED;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            border-left: 5px solid #EA580C;
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-section h3 {
+            color: #1E293B;
+            border-bottom: 3px solid #EA580C;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-section li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .content-section li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #EA580C;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .research-paper {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(45deg, rgba(5, 150, 105, 0.05), rgba(234, 88, 12, 0.05));
+            border-left: 4px solid #059669;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .research-paper:hover {
+            transform: translateX(10px);
+        }
+
+        .achievement {
+            background: linear-gradient(45deg, #FEF3C7, #FDE68A);
+            border: 2px solid #F59E0B;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .achievement:hover {
+            transform: scale(1.02);
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #EA580C, #059669);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 40px;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -55px;
+            top: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #EA580C;
+            border: 4px solid #FEF7ED;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-marker.current {
+            background: linear-gradient(135deg, #059669, #34D399);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .timeline-marker.special {
+            background: linear-gradient(135deg, #7C3AED, #A855F7);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .timeline-marker.education {
+            background: linear-gradient(135deg, #F59E0B, #FCD34D);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .timeline-item:hover .timeline-marker {
+            transform: scale(1.3);
+        }
+
+        .timeline-content {
+            background: rgba(5, 150, 105, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #EA580C;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-content {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .timeline-date {
+            font-size: 0.9em;
+            color: #059669;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1E293B;
+            margin-bottom: 5px;
+        }
+
+        .timeline-desc {
+            color: #475569;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(5, 150, 105, 0.6);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+            }
+        }
+
+        /* Portfolio Section Styles */
+        .portfolio-section {
+            background: #FEF7ED;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            border-left: 5px solid #7C3AED;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .portfolio-section h3 {
+            color: #1E293B;
+            border-bottom: 3px solid #7C3AED;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .portfolio-category {
+            background: rgba(124, 58, 237, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #7C3AED;
+        }
+
+        .portfolio-category h4 {
+            color: #7C3AED;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .portfolio-item {
+            background: #FEF7ED;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #A855F7;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateX(8px);
+        }
+
+        .portfolio-item strong {
+            color: #1E293B;
+            display: block;
+            margin-bottom: 5px;
+        }
+
         /* Quick Access Links */
         .quick-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 25px;
         }
+
         .quick-links a {
             display: inline-block;
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #1E293B, #475569);
+            color: #FEF7ED;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 10px;
             font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(30, 41, 59, 0.3);
         }
+
         .quick-links a:hover {
-            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(30, 41, 59, 0.4);
+        }
+
+        /* Full width section */
+        .full-width-section {
+            width: 100%;
+            margin-bottom: 30px;
         }
         
         @media (max-width: 768px) {
-            .content-grid {
+            body {
+                padding: 10px;
+            }
+
+            .content-grid, .portfolio-grid {
                 grid-template-columns: 1fr;
             }
+
             .profile-header {
                 flex-direction: column;
                 text-align: center;
             }
+
             .profile-photo {
                 margin-right: 0;
             }
+
+            .profile-info h1 {
+                font-size: 2.2em;
+            }
+
+            .timetable-notes-section {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .timetable-container, .quick-notes-container {
+                width: 100%;
+            }
+
+            .timetable-content {
+                height: 300px;
+            }
+
+            .notes-content {
+                height: 200px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .content-section h3 {
+                font-size: 1.6em;
+            }
+
+            .timeline {
+                padding-left: 20px;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-marker {
+                left: -45px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .timeline-item {
+                padding-left: 30px;
+            }
+        }
+
+        /* Special highlight elements */
+        .highlight-box {
+            background: linear-gradient(135deg, #059669, #34D399);
+            color: #FEF7ED;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
+        }
+
+        .accent-box {
+            background: linear-gradient(135deg, #EA580C, #FB923C);
+            color: #FEF7ED;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+            box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
+        }
+
+        .emphasis {
+            background: linear-gradient(135deg, #EA580C, #FB923C);
+            color: #FEF7ED;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <!-- Profile Header -->
-        <div class="profile-section">
+        <!-- Profile Header - Full Width -->
+        <div class="profile-section full-width-section">
             <div class="profile-header">
                 <div class="profile-photo">
                     <img src="images/Passport photo recent.png" alt="Dr. Dhaval U. Patel">
@@ -215,166 +698,242 @@
             </div>
         </div>
 
+        <!-- Timetable and Quick Notes Section -->
+        <div class="timetable-notes-section">
+            <div class="timetable-container">
+                <h3>Weekly Timetable</h3>
+                <div class="timetable-content">
+                    <img src="images/timetable 2025.png" alt="Weekly Class Timetable">
+                </div>
+            </div>
+            
+            <div class="quick-notes-container">
+                <h3>Quick Notes & Tasks</h3>
+                <div class="notes-input-section">
+                    <input type="date" id="note-date" class="note-date-input">
+                    <input type="text" id="note-tag" placeholder="Tag (e.g., meeting, research)" class="note-tag-input">
+                    <select id="note-type" class="note-type-select">
+                        <option value="todo">To-Do (Checkbox)</option>
+                        <option value="note">Note (Bullet)</option>
+                    </select>
+                    <div class="note-input-container">
+                        <input type="text" id="quick-note-input" placeholder="Add note or task...">
+                        <button id="add-note-btn">Add</button>
+                    </div>
+                </div>
+                <div class="notes-content" id="notes-content">
+                    <!-- Notes and tasks will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Background and Research Publications Grid -->
         <div class="content-grid">
-            <!-- Left Column -->
-            <div class="left-column">
-                <!-- Introduction Section -->
-                <div class="content-section">
-                    <h3>Professional Background</h3>
-                    <ul>
-                        <li><strong>December 2021 - Present:</strong> Assistant Professor at GEC Bharuch</li>
-                        <li><strong>September 2015 - December 2021:</strong> Lecturer at Lukhdhirji Engineering College</li>
-                        <li><strong>June 2014 - April 2015:</strong> Trainee at SAC ISRO, Ahmedabad (Master's dissertation with exposure to MOM mission)</li>
-                        <li><strong>2013-2015:</strong> Master's degree from Vishwakarma Government Engineering College (VGEC), Chandkheda</li>
-                        <li><strong>2009-2013:</strong> Bachelor's degree in Technology from Nirma University, Ahmedabad</li>
-                    </ul>
+            <!-- Professional Background Timeline -->
+            <div class="content-section">
+                <h3>Professional Background</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker current"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">December 2021 - Present</div>
+                            <div class="timeline-title">Assistant Professor</div>
+                            <div class="timeline-desc">GEC Bharuch</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">September 2015 - December 2021</div>
+                            <div class="timeline-title">Lecturer</div>
+                            <div class="timeline-desc">Lukhdhirji Engineering College</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker special"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">June 2014 - April 2015</div>
+                            <div class="timeline-title">Trainee at SAC ISRO</div>
+                            <div class="timeline-desc">Ahmedabad (Master's dissertation with exposure to MOM mission)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker education"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2013 - 2015</div>
+                            <div class="timeline-title">Master's Degree</div>
+                            <div class="timeline-desc">Vishwakarma Government Engineering College (VGEC), Chandkheda</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker education"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">2009 - 2013</div>
+                            <div class="timeline-title">Bachelor's Degree in Technology</div>
+                            <div class="timeline-desc">Nirma University, Ahmedabad</div>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Research Papers Section -->
-                <div class="content-section">
-                    <h3>Research Publications</h3>
-                    <div class="research-paper">
-                        <strong>1.</strong> Joshi, J. M., & Patel, D. U. (2024). GIDSL: Indian-Gujarati isolated dynamic sign language recognition using deep learning. <em>SN Computer Science</em>, <em>5</em>(5), 527.
-                    </div>
-                    <div class="research-paper">
-                        <strong>2.</strong> Patel, D. U., & Joshi, J. M. (2022, September). Review of Indian dynamic sign language recognition system. In <em>Proceedings of International Conference on Communication and Computational Technologies: ICCCT 2022</em> (pp. 17-31). Singapore: Springer Nature Singapore.
-                    </div>
-                    <div class="research-paper">
-                        <strong>3.</strong> Patel, D. U., & Joshi, J. M. (2022). Deep learning-based static Indian-Gujarati Sign language gesture recognition. <em>SN Computer Science</em>, <em>3</em>(5), 380.
-                    </div>
-                    <div class="research-paper">
-                        <strong>4.</strong> Joshi, J. M., & Patel, D. U. (2024). Dynamic Indian Sign Language Recognition Based on Enhanced LSTM with Custom Attention Mechanism. <em>SSRG International Journal of Electronics and Communication Engineering</em>, Volume 11 Issue 2, 60-68, February 2024.
-                    </div>
-                </div>
-
-                <!-- Achievements Section -->
-                <div class="content-section">
-                    <h3>Achievements</h3>
-                    <div class="achievement">
-                        <strong>Smart India Hackathon 2023:</strong> Won ₹1,00,000 as a mentor for the college team in the smart automation category.
-                    </div>
-                </div>
-
-
             </div>
 
-            <!-- Right Column - Timetable and To-Do List -->
-            <div class="right-column">
-                <!-- Timetable Section -->
-                <div class="content-section">
-                    <h3>Weekly Timetable</h3>
-                    <img src="images/timetable 2025.png" alt="Weekly Class Timetable" style="width: 100%; max-width: 400px; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <!-- Research Papers Section -->
+            <div class="content-section">
+                <h3>Research Publications</h3>
+                <div class="research-paper">
+                    <strong>1.</strong> Joshi, J. M., & Patel, D. U. (2024). GIDSL: Indian-Gujarati isolated dynamic sign language recognition using deep learning. <em>SN Computer Science</em>, <em>5</em>(5), 527.
                 </div>
+                <div class="research-paper">
+                    <strong>2.</strong> Patel, D. U., & Joshi, J. M. (2022, September). Review of Indian dynamic sign language recognition system. In <em>Proceedings of International Conference on Communication and Computational Technologies: ICCCT 2022</em> (pp. 17-31). Singapore: Springer Nature Singapore.
+                </div>
+                <div class="research-paper">
+                    <strong>3.</strong> Patel, D. U., & Joshi, J. M. (2022). Deep learning-based static Indian-Gujarati Sign language gesture recognition. <em>SN Computer Science</em>, <em>3</em>(5), 380.
+                </div>
+                <div class="research-paper">
+                    <strong>4.</strong> Joshi, J. M., & Patel, D. U. (2024). Dynamic Indian Sign Language Recognition Based on Enhanced LSTM with Custom Attention Mechanism. <em>SSRG International Journal of Electronics and Communication Engineering</em>, Volume 11 Issue 2, 60-68, February 2024.
+                </div>
+            </div>
+        </div>
 
-                <div class="todo-container">
-                    <h3>Daily Tasks</h3>
-
-                    <div class="todo-input-container">
-                        <input type="text" id="new-task" placeholder="Add a new task...">
-                        <button id="add-task-btn">Add Task</button>
+        <!-- Current Portfolios Section -->
+        <div class="portfolio-section full-width-section">
+            <h3>Current Portfolios</h3>
+            <div class="portfolio-grid">
+                <div class="portfolio-category">
+                    <h4>Institute Level Portfolio</h4>
+                    <div class="portfolio-item">
+                        <strong>Website Committee Member</strong>
+                        Responsible for college website development and maintenance
                     </div>
-
-                    <ul id="todo-list">
-                    </ul>
+                    <div class="portfolio-item">
+                        <strong>Social Media Committee Member</strong>
+                        Managing official social media presence and content strategy
+                    </div>
+                    <div class="portfolio-item">
+                        <strong>GEPG Verifier</strong>
+                        Gujarat Education Portal Grade verification and validation
+                    </div>
+                    <div class="portfolio-item">
+                        <strong>SPC Committee Member</strong>
+                        Student Placement Committee for career guidance and placements
+                    </div>
                 </div>
+                
+                <div class="portfolio-category">
+                    <h4>Department Portfolio</h4>
+                    <div class="portfolio-item">
+                        <strong>Timetable Coordinator</strong>
+                        Department class scheduling and academic calendar management
+                    </div>
+                    <div class="portfolio-item">
+                        <strong>HOD Email Correspondence</strong>
+                        Administrative communication and departmental coordination
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements Section -->
+        <div class="content-section full-width-section">
+            <h3>Achievements</h3>
+            <div class="achievement">
+                <strong>Smart India Hackathon 2023:</strong> Won ₹1,00,000 as a mentor for the college team in the smart automation category.
             </div>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
     <script>
-        // Your Firebase project configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBRuZu429XdA_YtoIDSbKyFQpTCtzV3sXk",
-            authDomain: "githubpagestodo.firebaseapp.com",
-            projectId: "githubpagestodo",
-            storageBucket: "githubpagestodo.firebasestorage.app",
-            messagingSenderId: "176624505829",
-            appId: "1:176624505829:web:d63c054494ffcf8fb7d50c",
-            measurementId: "G-V5E4WXQ17W"
-        };
+        // Quick Notes Functionality
+        const noteDateInput = document.getElementById('note-date');
+        const noteTagInput = document.getElementById('note-tag');
+        const noteTypeSelect = document.getElementById('note-type');
+        const quickNoteInput = document.getElementById('quick-note-input');
+        const addNoteBtn = document.getElementById('add-note-btn');
+        const notesContent = document.getElementById('notes-content');
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const todosCollection = db.collection('todos'); // Reference to your 'todos' collection
+        // Set today's date as default
+        noteDateInput.valueAsDate = new Date();
 
-        const newTaskInput = document.getElementById('new-task');
-        const addTaskBtn = document.getElementById('add-task-btn');
-        const todoList = document.getElementById('todo-list');
+        let noteIdCounter = 0;
 
-        // Function to add a task to the DOM
-        function addTaskToDOM(docId, taskText, isCompleted = false) {
-            const li = document.createElement('li');
-            li.setAttribute('data-id', docId); // Store Firebase document ID
-            if (isCompleted) {
-                li.classList.add('completed');
+        function addNoteToDOM(id, date, tag, type, text) {
+            const noteDiv = document.createElement('div');
+            noteDiv.classList.add('note-item');
+            noteDiv.classList.add(type === 'todo' ? 'todo-item' : 'note-item-bullet');
+            noteDiv.setAttribute('data-note-id', id);
+
+            const noteHeader = document.createElement('div');
+            noteHeader.classList.add('note-header');
+            
+            const dateSpan = document.createElement('span');
+            dateSpan.textContent = date;
+            
+            const tagSpan = document.createElement('span');
+            tagSpan.classList.add('note-tag');
+            tagSpan.textContent = tag || 'general';
+            
+            noteHeader.appendChild(dateSpan);
+            noteHeader.appendChild(tagSpan);
+
+            const noteContentDiv = document.createElement('div');
+            noteContentDiv.classList.add('note-content');
+
+            if (type === 'todo') {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.addEventListener('change', () => {
+                    textSpan.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
+                    textSpan.style.color = checkbox.checked ? '#888' : '#333';
+                });
+                noteContentDiv.appendChild(checkbox);
+            } else {
+                const bullet = document.createElement('span');
+                bullet.classList.add('note-bullet');
+                bullet.textContent = '•';
+                noteContentDiv.appendChild(bullet);
             }
 
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = isCompleted;
-            checkbox.addEventListener('change', async () => {
-                li.classList.toggle('completed');
-                // Update status in Firestore
-                await todosCollection.doc(docId).update({ completed: li.classList.contains('completed') });
-            });
-
-            const taskSpan = document.createElement('span');
-            taskSpan.textContent = taskText;
+            const textSpan = document.createElement('span');
+            textSpan.classList.add('note-text');
+            textSpan.textContent = text;
 
             const deleteBtn = document.createElement('button');
-            deleteBtn.textContent = 'Delete';
-            deleteBtn.addEventListener('click', async () => {
-                // Delete from Firestore
-                await todosCollection.doc(docId).delete();
-                li.remove(); // Remove from DOM after successful deletion
+            deleteBtn.classList.add('note-delete');
+            deleteBtn.textContent = '×';
+            deleteBtn.addEventListener('click', () => {
+                noteDiv.remove();
             });
 
-            li.appendChild(checkbox);
-            li.appendChild(taskSpan);
-            li.appendChild(deleteBtn);
-            todoList.appendChild(li);
+            noteContentDiv.appendChild(textSpan);
+            noteContentDiv.appendChild(deleteBtn);
+
+            noteDiv.appendChild(noteHeader);
+            noteDiv.appendChild(noteContentDiv);
+            
+            notesContent.appendChild(noteDiv);
+            notesContent.scrollTop = notesContent.scrollHeight;
         }
 
-        // --- Real-time Listener for Firestore Changes ---
-        todosCollection.orderBy('timestamp', 'asc').onSnapshot(snapshot => {
-            // Clear existing list to re-render
-            todoList.innerHTML = '';
-            snapshot.forEach(doc => {
-                const task = doc.data();
-                addTaskToDOM(doc.id, task.text, task.completed);
-            });
-        }, error => {
-            console.error("Error listening to Firestore:", error);
-            alert("Error loading tasks. Check your console for details.");
-        });
+        addNoteBtn.addEventListener('click', () => {
+            const date = noteDateInput.value || new Date().toISOString().split('T')[0];
+            const tag = noteTagInput.value.trim();
+            const type = noteTypeSelect.value;
+            const text = quickNoteInput.value.trim();
 
-        // Event listener for adding a new task
-        addTaskBtn.addEventListener('click', async () => {
-            const taskText = newTaskInput.value.trim();
-            if (taskText !== '') {
-                try {
-                    // Add to Firestore
-                    await todosCollection.add({
-                        text: taskText,
-                        completed: false,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp() // For ordering
-                    });
-                    newTaskInput.value = ''; // Clear the input
-                } catch (error) {
-                    console.error("Error adding task:", error);
-                    alert("Error adding task. Check your console for details.");
-                }
+            if (text !== '') {
+                addNoteToDOM(++noteIdCounter, date, tag, type, text);
+                quickNoteInput.value = '';
+                noteTagInput.value = '';
+                // Keep the date and type as is for next entry
             }
         });
 
-        // Allow adding tasks by pressing Enter
-        newTaskInput.addEventListener('keypress', (e) => {
+        quickNoteInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                addTaskBtn.click();
+                addNoteBtn.click();
             }
         });
     </script>
