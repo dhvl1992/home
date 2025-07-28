@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My GitHub Page To-Do List</title>
+    <style>
+        /* Your existing CSS here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .todo-input-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #new-task {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        #add-task-btn {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        #add-task-btn:hover {
+            background-color: #218838;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        li.completed {
+            text-decoration: line-through;
+            color: #888;
+            background-color: #e9e9e9;
+        }
+        li input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        li button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        li button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>My To-Do List</h1>
+
+        <div class="todo-input-container">
+            <input type="text" id="new-task" placeholder="Add a new task...">
+            <button id="add-task-btn">Add Task</button>
+        </div>
+
+        <ul id="todo-list">
+            </ul>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Your Firebase project configuration
+        const firebaseConfig = {
+  apiKey: "AIzaSyBRuZu429XdA_YtoIDSbKyFQpTCtzV3sXk",
+  authDomain: "githubpagestodo.firebaseapp.com",
+  projectId: "githubpagestodo",
+  storageBucket: "githubpagestodo.firebasestorage.app",
+  messagingSenderId: "176624505829",
+  appId: "1:176624505829:web:d63c054494ffcf8fb7d50c",
+  measurementId: "G-V5E4WXQ17W"
+};
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const todosCollection = db.collection('todos'); // Reference to your 'todos' collection
+
+        const newTaskInput = document.getElementById('new-task');
+        const addTaskBtn = document.getElementById('add-task-btn');
+        const todoList = document.getElementById('todo-list');
+
+        // Function to add a task to the DOM
+        function addTaskToDOM(docId, taskText, isCompleted = false) {
+            const li = document.createElement('li');
+            li.setAttribute('data-id', docId); // Store Firebase document ID
+            if (isCompleted) {
+                li.classList.add('completed');
+            }
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = isCompleted;
+            checkbox.addEventListener('change', async () => {
+                li.classList.toggle('completed');
+                // Update status in Firestore
+                await todosCollection.doc(docId).update({ completed: li.classList.contains('completed') });
+            });
+
+            const taskSpan = document.createElement('span');
+            taskSpan.textContent = taskText;
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', async () => {
+                // Delete from Firestore
+                await todosCollection.doc(docId).delete();
+                li.remove(); // Remove from DOM after successful deletion
+            });
+
+            li.appendChild(checkbox);
+            li.appendChild(taskSpan);
+            li.appendChild(deleteBtn);
+            todoList.appendChild(li);
+        }
+
+        // --- Real-time Listener for Firestore Changes ---
+        todosCollection.orderBy('timestamp', 'asc').onSnapshot(snapshot => {
+            // Clear existing list to re-render
+            todoList.innerHTML = '';
+            snapshot.forEach(doc => {
+                const task = doc.data();
+                addTaskToDOM(doc.id, task.text, task.completed);
+            });
+        }, error => {
+            console.error("Error listening to Firestore:", error);
+            alert("Error loading tasks. Check your console for details.");
+        });
+
+        // Event listener for adding a new task
+        addTaskBtn.addEventListener('click', async () => {
+            const taskText = newTaskInput.value.trim();
+            if (taskText !== '') {
+                try {
+                    // Add to Firestore
+                    await todosCollection.add({
+                        text: taskText,
+                        completed: false,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp() // For ordering
+                    });
+                    newTaskInput.value = ''; // Clear the input
+                } catch (error) {
+                    console.error("Error adding task:", error);
+                    alert("Error adding task. Check your console for details.");
+                }
+            }
+        });
+
+        // Allow adding tasks by pressing Enter
+        newTaskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTaskBtn.click();
+            }
+        });
+    </script>
+
+</body>
+</html>
