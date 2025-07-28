@@ -1,25 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My GitHub Page To-Do List</title>
+    <title>Dr. Dhaval U. Patel - Professor Homepage</title>
     <style>
-        /* Your existing CSS here */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
+            margin: 0;
             padding: 20px;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .profile-section {
+            background-color: #fff;
+            padding: 30px;
+            margin-bottom: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-        h1 {
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .profile-photo {
+            margin-right: 30px;
+            margin-bottom: 20px;
+        }
+        .profile-photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #007bff;
+        }
+        .profile-info h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .profile-info h2 {
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .content-section {
+            background-color: #fff;
+            padding: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .content-section h3 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .research-paper {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+        .achievement {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .blog-entry {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .blog-entry:last-child {
+            border-bottom: none;
+        }
+        .blog-date {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        /* To-Do List Styles */
+        .todo-container {
+            background-color: #fff;
+            padding: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .todo-container h3 {
             text-align: center;
             color: #333;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
         .todo-input-container {
             display: flex;
@@ -82,20 +169,135 @@
         li button:hover {
             background-color: #c82333;
         }
+        
+        /* Quick Access Links */
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quick-links a {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .quick-links a:hover {
+            background-color: #0056b3;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-photo {
+                margin-right: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>My To-Do List</h1>
-
-        <div class="todo-input-container">
-            <input type="text" id="new-task" placeholder="Add a new task...">
-            <button id="add-task-btn">Add Task</button>
+    <div class="main-container">
+        <!-- Profile Header -->
+        <div class="profile-section">
+            <div class="profile-header">
+                <div class="profile-photo">
+                    <img src="profile-photo.jpg" alt="Dr. Dhaval U. Patel">
+                </div>
+                <div class="profile-info">
+                    <h1>Dr. Dhaval U. Patel</h1>
+                    <h2>Assistant Professor at GEC Bharuch</h2>
+                    <div class="quick-links">
+                        <a href="https://gmail.com" target="_blank">Personal Email</a>
+                        <a href="https://calendar.google.com/calendar/u/0/r?pli=1" target="_blank">Calendar</a>
+                        <a href="https://dhvl1992.github.io/Teaching/" target="_blank">Course Management</a>
+                        <a href="https://gtu.ac.in" target="_blank">University Portal</a>
+                        <a href="https://www.gecbharuch.com" target="_blank">College Website</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <ul id="todo-list">
-            </ul>
+        <div class="content-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Introduction Section -->
+                <div class="content-section">
+                    <h3>Professional Background</h3>
+                    <ul>
+                        <li><strong>December 2021 - Present:</strong> Assistant Professor at GEC Bharuch</li>
+                        <li><strong>September 2015 - December 2021:</strong> Lecturer at Lukhdhirji Engineering College</li>
+                        <li><strong>June 2014 - April 2015:</strong> Trainee at SAC ISRO, Ahmedabad (Master's dissertation with exposure to MOM mission)</li>
+                        <li><strong>2013-2015:</strong> Master's degree from Vishwakarma Government Engineering College (VGEC), Chandkheda</li>
+                        <li><strong>2009-2013:</strong> Bachelor's degree in Technology from Nirma University, Ahmedabad</li>
+                    </ul>
+                </div>
+
+                <!-- Research Papers Section -->
+                <div class="content-section">
+                    <h3>Research Publications</h3>
+                    <div class="research-paper">
+                        <strong>1.</strong> Joshi, J. M., & Patel, D. U. (2024). GIDSL: Indian-Gujarati isolated dynamic sign language recognition using deep learning. <em>SN Computer Science</em>, <em>5</em>(5), 527.
+                    </div>
+                    <div class="research-paper">
+                        <strong>2.</strong> Patel, D. U., & Joshi, J. M. (2022, September). Review of Indian dynamic sign language recognition system. In <em>Proceedings of International Conference on Communication and Computational Technologies: ICCCT 2022</em> (pp. 17-31). Singapore: Springer Nature Singapore.
+                    </div>
+                    <div class="research-paper">
+                        <strong>3.</strong> Patel, D. U., & Joshi, J. M. (2022). Deep learning-based static Indian-Gujarati Sign language gesture recognition. <em>SN Computer Science</em>, <em>3</em>(5), 380.
+                    </div>
+                    <div class="research-paper">
+                        <strong>4.</strong> Joshi, J. M., & Patel, D. U. (2024). Dynamic Indian Sign Language Recognition Based on Enhanced LSTM with Custom Attention Mechanism. <em>SSRG International Journal of Electronics and Communication Engineering</em>, Volume 11 Issue 2, 60-68, February 2024.
+                    </div>
+                </div>
+
+                <!-- Achievements Section -->
+                <div class="content-section">
+                    <h3>Achievements</h3>
+                    <div class="achievement">
+                        <strong>Smart India Hackathon 2023:</strong> Won ₹1,00,000 as a mentor for the college team in the smart automation category.
+                    </div>
+                </div>
+
+                <!-- Blog Section -->
+                <div class="content-section">
+                    <h3>Weekly Blog Updates</h3>
+                    <div class="blog-entry">
+                        <div class="blog-date">Week of July 28, 2025</div>
+                        <h4>Current Research Progress</h4>
+                        <p>Working on advanced sign language recognition algorithms with improved accuracy metrics...</p>
+                    </div>
+                    <div class="blog-entry">
+                        <div class="blog-date">Week of July 21, 2025</div>
+                        <h4>Teaching Updates</h4>
+                        <p>Started new semester with updated curriculum for machine learning courses...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - To-Do List -->
+            <div class="right-column">
+                <div class="todo-container">
+                    <h3>Daily Tasks</h3>
+
+                    <div class="todo-input-container">
+                        <input type="text" id="new-task" placeholder="Add a new task...">
+                        <button id="add-task-btn">Add Task</button>
+                    </div>
+
+                    <ul id="todo-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -104,14 +306,14 @@
     <script>
         // Your Firebase project configuration
         const firebaseConfig = {
-  apiKey: "AIzaSyBRuZu429XdA_YtoIDSbKyFQpTCtzV3sXk",
-  authDomain: "githubpagestodo.firebaseapp.com",
-  projectId: "githubpagestodo",
-  storageBucket: "githubpagestodo.firebasestorage.app",
-  messagingSenderId: "176624505829",
-  appId: "1:176624505829:web:d63c054494ffcf8fb7d50c",
-  measurementId: "G-V5E4WXQ17W"
-};
+            apiKey: "AIzaSyBRuZu429XdA_YtoIDSbKyFQpTCtzV3sXk",
+            authDomain: "githubpagestodo.firebaseapp.com",
+            projectId: "githubpagestodo",
+            storageBucket: "githubpagestodo.firebasestorage.app",
+            messagingSenderId: "176624505829",
+            appId: "1:176624505829:web:d63c054494ffcf8fb7d50c",
+            measurementId: "G-V5E4WXQ17W"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
