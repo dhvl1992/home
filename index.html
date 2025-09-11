@@ -25,6 +25,29 @@
             margin-bottom: 40px;
         }
 
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .profile-photo {
+            flex-shrink: 0;
+        }
+
+        .profile-photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e9ecef;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
         .name {
             font-size: 2.5em;
             font-weight: 600;
@@ -221,6 +244,12 @@
                 padding: 20px 15px;
             }
 
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
             .name {
                 font-size: 2em;
             }
@@ -238,12 +267,19 @@
 </head>
 <body>
     <header class="header">
-        <h1 class="name">Dhaval Patel</h1>
-        <p class="bio">
-            I am an Assistant Professor and ML researcher specializing in self-supervised learning and sign language recognition. 
-            I work at Government Engineering College (GEC) Bharuch, where I teach AI/ML courses and conduct research on deep learning 
-            applications. My current research focuses on SimCLR stability improvements and Indian Sign Language recognition systems.
-        </p>
+        <div class="header-content">
+            <div class="profile-photo">
+                <img src="images/Passport photo recent.png" alt="Dhaval Patel">
+            </div>
+            <div class="header-text">
+                <h1 class="name">Dhaval Patel</h1>
+                <p class="bio">
+                    I am an Assistant Professor and ML researcher specializing in self-supervised learning and sign language recognition. 
+                    I work at Government Engineering College (GEC) Bharuch, where I teach AI/ML courses and conduct research on deep learning 
+                    applications. My current research focuses on SimCLR stability improvements and Indian Sign Language recognition systems.
+                </p>
+            </div>
+        </div>
         <div class="contact-info">
             <a href="mailto:dhvl1992@gmail.com">dhvl1992@gmail.com</a> | 
             <a href="mailto:dhaval.patel.ec@gecbhar.gujgov.edu.in">dhaval.patel.ec@gecbhar.gujgov.edu.in</a><br>
@@ -257,7 +293,6 @@
                 <a href="#publications">Publications</a>
                 <a href="#experience">Experience</a>
                 <a href="#education">Education</a>
-
             </div>
         </nav>
     </header>
